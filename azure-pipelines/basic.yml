@@ -8,7 +8,7 @@ pool:
 
 variables:
   terraformVersion: '1.5.5'  # Specify the Terraform version
-  azureServiceConnection: 'intech'  # Azure service connection name
+  azureServiceConnection: 'azurerm'  # Azure service connection name
   backendResourceGroup: 'skink-rg'
   backendStorageAccount: 'skinktfstate'  # Remote backend storage account
   backendContainer: 'tfstate'  # Remote backend storage container
@@ -47,5 +47,10 @@ stages:
               provider: 'azurerm'
               command: 'plan'  # Run terraform plan
               environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
-
               workingDirectory: 'terraform'  # Set the working directory
+
+          - task: TerraformTaskV4@4
+            inputs:
+              provider: 'azurerm'
+              command: 'apply'
+              commandOptions: '--auto-approve'
