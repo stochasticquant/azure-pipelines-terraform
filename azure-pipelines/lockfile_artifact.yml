@@ -86,4 +86,5 @@ stages:
               command: 'apply'  # Run terraform apply
               backendServiceArm: $(azureServiceConnection)
               commandOptions: '--auto-approve'
+              environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
               workingDirectory: 'terraform'  # Set the working directory
