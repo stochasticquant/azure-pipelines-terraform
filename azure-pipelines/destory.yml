@@ -15,7 +15,7 @@ variables:
   backendKey: 'terraform.tfstate'  # State file name in remote backend
 
 stages:
-  - stage: destroy
+  - stage: Initialization
     jobs:
       - job: TerraformInit
         steps:
@@ -41,8 +41,6 @@ stages:
               provider: 'azurerm'
               command: 'validate'  # Validate Terraform configuration
               workingDirectory: 'terraform'
-      - job: TerraformDestroy
-        steps:
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
