@@ -8,7 +8,7 @@ pool:
 
 variables:
   terraformVersion: '1.5.5'  # Specify the Terraform version
-  azureServiceConnection: 'intech'  # Azure service connection name
+  azureServiceConnection: 'azurerm'  # Azure service connection name
   backendResourceGroup: 'skink-rg'
   backendStorageAccount: 'skinktfstate'  # Remote backend storage account
   backendContainer: 'tfstate'  # Remote backend storage container
@@ -43,18 +43,29 @@ stages:
               command: 'validate'  # Validate Terraform configuration
               workingDirectory: 'terraform'
 
+          # Publish the Terraform state as an artifact
+          - task: PublishPipelineArtifact@1
+            inputs:
+              targetPath: 'terraform'
+              artifactName: 'terraform-state'
+
   # Stage 2: Plan
   - stage: Plan
     dependsOn: Initialization  # The Plan stage depends on the Initialization stage
     jobs:
       - job: TerraformPlan
         steps:
+          # Download the Terraform state artifact
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'terraform-state'
+              downloadPath: 'terraform'
+
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
               command: 'plan'  # Run terraform plan
               environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
-              backendServiceArm: $(azureServiceConnection)
               workingDirectory: 'terraform'  # Set the working directory
 
   # Stage 3: Apply (with manual approval)
@@ -75,10 +86,17 @@ stages:
               onTimeout: 'resume'
       - job: TerraformApply
         steps:
+          # Download the Terraform state artifact
+          - task: DownloadPipelineArtifact@2
+            inputs:
+              artifactName: 'terraform-state'
+              downloadPath: 'terraform'
+              
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
               command: 'apply'  # Run terraform apply
               backendServiceArm: $(azureServiceConnection)
               commandOptions: '--auto-approve'
+              environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
               workingDirectory: 'terraform'  # Set the working directory
