@@ -12,11 +12,11 @@ stages:
     displayName: 'Dev Environment'
     variables:
       environmentName: 'dev'
-      backendRG: 'skink-rg-dev'
-      backendSA: 'skinktfstate-dev'
+      backendRG: 'skink-rg'
+      backendSA: 'skinktfstate'
       backendKey: 'dev-terraform.tfstate'
-      azureServiceConnection: 'azurerm-dev'
-      approvalEmail: 'dev-approver@example.com'
+      azureServiceConnection: 'azurerm'
+      approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
       - template: terraform-template.yml
         parameters:
