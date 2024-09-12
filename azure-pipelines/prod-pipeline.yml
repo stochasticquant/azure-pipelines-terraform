@@ -1,0 +1,70 @@
+trigger:
+  branches:
+    include:
+      - main
+
+pool:
+  name: 'Default'
+
+stages:
+  # Dev Stage
+  - stage: Dev
+    displayName: 'Dev Environment'
+    variables:
+      environmentName: 'dev'
+      backendRG: 'skink-rg-dev'
+      backendSA: 'skinktfstate-dev'
+      backendKey: 'dev-terraform.tfstate'
+      azureServiceConnection: 'azurerm-dev'
+      approvalEmail: 'dev-approver@example.com'
+    jobs:
+      - template: terraform-template.yml
+        parameters:
+          environmentName: $(environmentName)
+          backendRG: $(backendRG)
+          backendSA: $(backendSA)
+          backendKey: $(backendKey)
+          azureServiceConnection: $(azureServiceConnection)
+          approvalEmail: $(approvalEmail)
+
+  # Test Stage
+  - stage: Test
+    displayName: 'Test Environment'
+    dependsOn: Dev
+    variables:
+      environmentName: 'test'
+      backendRG: 'skink-rg-test'
+      backendSA: 'skinktfstate-test'
+      backendKey: 'test-terraform.tfstate'
+      azureServiceConnection: 'azurerm-test'
+      approvalEmail: 'test-approver@example.com'
+    jobs:
+      - template: terraform-template.yml
+        parameters:
+          environmentName: $(environmentName)
+          backendRG: $(backendRG)
+          backendSA: $(backendSA)
+          backendKey: $(backendKey)
+          azureServiceConnection: $(azureServiceConnection)
+          approvalEmail: $(approvalEmail)
+
+  # Prod Stage
+  - stage: Prod
+    displayName: 'Prod Environment'
+    dependsOn: Test
+    variables:
+      environmentName: 'prod'
+      backendRG: 'skink-rg-prod'
+      backendSA: 'skinktfstate-prod'
+      backendKey: 'prod-terraform.tfstate'
+      azureServiceConnection: 'azurerm-prod'
+      approvalEmail: 'prod-approver@example.com'
+    jobs:
+      - template: terraform-template.yml
+        parameters:
+          environmentName: $(environmentName)
+          backendRG: $(backendRG)
+          backendSA: $(backendSA)
+          backendKey: $(backendKey)
+          azureServiceConnection: $(azureServiceConnection)
+          approvalEmail: $(approvalEmail)
