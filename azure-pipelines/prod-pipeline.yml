@@ -36,7 +36,7 @@ stages:
       backendRG: 'skink-rg-test'
       backendSA: 'skinktfstate-test'
       backendKey: 'test-terraform.tfstate'
-      azureServiceConnection: 'azurerm-test'
+      azureServiceConnection: 'azurerm'
       approvalEmail: 'test-approver@example.com'
     jobs:
       - template: terraform-template.yml
@@ -57,7 +57,7 @@ stages:
       backendRG: 'skink-rg-prod'
       backendSA: 'skinktfstate-prod'
       backendKey: 'prod-terraform.tfstate'
-      azureServiceConnection: 'azurerm-prod'
+      azureServiceConnection: 'azurerm'
       approvalEmail: 'prod-approver@example.com'
     jobs:
       - template: terraform-template.yml
