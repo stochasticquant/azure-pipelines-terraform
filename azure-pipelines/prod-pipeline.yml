@@ -24,7 +24,7 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: $(azureServiceConnection)
+          azureServiceConnection: $(azureService Connection)
           approvalEmail: $(approvalEmail)
 
   # Test Stage
