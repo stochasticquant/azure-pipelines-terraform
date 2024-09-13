@@ -18,6 +18,7 @@ stages:
       azureServiceConnection: 'intech'
       approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
+      - script: echo $(azureServiceConnection)
       - template: terraform-template.yml
         parameters:
           environmentName: $(environmentName)
