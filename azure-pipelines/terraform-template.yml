@@ -15,7 +15,6 @@ parameters:
 jobs:
   - job: TerraformInit
     displayName: 'Initialize: ${{ parameters.environmentName }}'
-    environment: ${{ parameters.environmentName }}
     steps:
       - task: TerraformInstaller@0
         inputs:
@@ -45,7 +44,6 @@ jobs:
 
   - job: TerraformPlan
     displayName: 'Plan: ${{ parameters.environmentName }}'
-    environment: ${{ parameters.environmentName }}
     dependsOn: TerraformInit
     steps:
       - task: DownloadPipelineArtifact@2
@@ -64,7 +62,6 @@ jobs:
     displayName: Wait for external validation
     pool: server
     timeoutInMinutes: 4320 # 3 days timeout
-    environment: ${{ parameters.environmentName }}
     dependsOn: TerraformPlan
     steps:
       - task: ManualValidation@0
