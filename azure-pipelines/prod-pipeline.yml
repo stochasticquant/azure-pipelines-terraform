@@ -6,17 +6,18 @@ trigger:
 pool:
   name: 'Default'
 
+variables:
+  environmentName: 'dev'
+  backendRG: 'skink-rg'
+  backendSA: 'skinktfstate'
+  backendKey: 'dev-terraform.tfstate'
+  azureServiceConnection: 'intech'
+  approvalEmail: 'lukebyrnee97@gmail.com'
+
 stages:
   # Dev Stage
   - stage: Dev
     displayName: 'Dev Environment'
-    variables:
-      environmentName: 'dev'
-      backendRG: 'skink-rg'
-      backendSA: 'skinktfstate'
-      backendKey: 'dev-terraform.tfstate'
-      azureServiceConnection: 'intech'
-      approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
       - template: terraform-template.yml
         parameters:
@@ -24,20 +25,13 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: '$(azureServiceConnection)'
+          azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)
 
   # Test Stage
   - stage: Test
     displayName: 'Test Environment'
     dependsOn: Dev
-    variables:
-      environmentName: 'test'
-      backendRG: 'skink-rg-test'
-      backendSA: 'skinktfstate-test'
-      backendKey: 'test-terraform.tfstate'
-      azureServiceConnection: 'intech'
-      approvalEmail: 'test-approver@example.com'
     jobs:
       - template: terraform-template.yml
         parameters:
@@ -52,13 +46,6 @@ stages:
   - stage: Prod
     displayName: 'Prod Environment'
     dependsOn: Test
-    variables:
-      environmentName: 'prod'
-      backendRG: 'skink-rg-prod'
-      backendSA: 'skinktfstate-prod'
-      backendKey: 'prod-terraform.tfstate'
-      azureServiceConnection: 'intech'
-      approvalEmail: 'prod-approver@example.com'
     jobs:
       - template: terraform-template.yml
         parameters:
