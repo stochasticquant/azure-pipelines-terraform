@@ -24,7 +24,7 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: 'intech'
+          azureServiceConnection: '$(azureServiceConnection)'
           approvalEmail: $(approvalEmail)
 
   # Test Stage
@@ -45,7 +45,7 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: 'intech'
+          azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)
 
   # Prod Stage
@@ -66,5 +66,5 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: 'intech'
+          azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)
