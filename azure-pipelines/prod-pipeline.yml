@@ -7,12 +7,11 @@ pool:
   name: 'Default'
 
 variables:
-  environmentName: 'dev'
   backendRG: 'skink-rg'
   backendSA: 'skinktfstate'
-  backendKey: 'dev-terraform.tfstate'
+  backendKey: 'terraform.tfstate'
   azureServiceConnection: 'intech'
-  approvalEmail: 'lukebyrnee97@gmail.com'
+  approvalEmail: 'intx.contact@gmail.com'
 
 stages:
   # Dev Stage
@@ -21,7 +20,7 @@ stages:
     jobs:
       - template: terraform-template.yml
         parameters:
-          environmentName: $(environmentName)
+          environmentName: 'dev'
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
@@ -35,7 +34,7 @@ stages:
     jobs:
       - template: terraform-template.yml
         parameters:
-          environmentName: $(environmentName)
+          environmentName: 'test'
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
@@ -49,7 +48,7 @@ stages:
     jobs:
       - template: terraform-template.yml
         parameters:
-          environmentName: $(environmentName)
+          environmentName: 'prod'
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
