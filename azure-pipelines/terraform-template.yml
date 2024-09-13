@@ -74,21 +74,25 @@ jobs:
           instructions: 'Please validate the build configuration and resume'
           onTimeout: 'resume'
 
-  - job: TerraformApply
+  - deployment: TerraformApply
     displayName: 'Apply: ${{ parameters.environmentName }}'
-    environment: ${{ parameters.environmentName }}
+    environment: ${{ parameters.environmentName }}  # This sets the target environment for deployment
     dependsOn: waitForValidation
-    steps:
-      - task: DownloadPipelineArtifact@2
-        inputs:
-          artifactName: 'terraform-state'
-          downloadPath: 'terraform'
+    strategy:
+      runOnce:
+        deploy:
+          steps:
+            - task: DownloadPipelineArtifact@2
+              inputs:
+                artifactName: 'terraform-state'
+                downloadPath: 'terraform'
 
-      - task: TerraformTaskV4@4
-        inputs:
-          provider: 'azurerm'
-          command: 'apply'
-          backendServiceArm: ${{ parameters.azureServiceConnection }}
-          commandOptions: '--auto-approve'
-          environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
-          workingDirectory: 'terraform'
+            - task: TerraformTaskV4@4
+              inputs:
+                provider: 'azurerm'
+                command: 'apply'
+                backendServiceArm: ${{ parameters.azureServiceConnection }}
+                commandOptions: '--auto-approve'
+                environmentServiceNameAzureRM: ${{ parameters.azureServiceConnection }}
+                workingDirectory: 'terraform'
+
