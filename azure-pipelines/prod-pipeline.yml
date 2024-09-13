@@ -15,7 +15,7 @@ stages:
       backendRG: 'skink-rg'
       backendSA: 'skinktfstate'
       backendKey: 'dev-terraform.tfstate'
-      azureServiceConnection: 'azurerm'
+      azureServiceConnection: 'intech'
       approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
       - template: terraform-template.yml
