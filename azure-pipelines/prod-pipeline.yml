@@ -18,20 +18,13 @@ stages:
       azureServiceConnection: 'intech'
       approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
-      - job: DebugVariables
-        steps:
-          - script: echo "Azure Service Connection: $(azureServiceConnection)"
-          - script: echo "Backend Resource Group: $(backendRG)"
-          - script: echo "Backend Storage Account: $(backendSA)"
-          - script: echo "Backend Key: $(backendKey)"
-      
       - template: terraform-template.yml
         parameters:
           environmentName: $(environmentName)
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: $(azureServiceConnection)
+          azureServiceConnection: 'intech'
           approvalEmail: $(approvalEmail)
 
   # Test Stage
@@ -43,7 +36,7 @@ stages:
       backendRG: 'skink-rg-test'
       backendSA: 'skinktfstate-test'
       backendKey: 'test-terraform.tfstate'
-      azureServiceConnection: 'azurerm'
+      azureServiceConnection: 'intech'
       approvalEmail: 'test-approver@example.com'
     jobs:
       - template: terraform-template.yml
@@ -52,7 +45,7 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: $(azureServiceConnection)
+          azureServiceConnection: 'intech'
           approvalEmail: $(approvalEmail)
 
   # Prod Stage
@@ -64,7 +57,7 @@ stages:
       backendRG: 'skink-rg-prod'
       backendSA: 'skinktfstate-prod'
       backendKey: 'prod-terraform.tfstate'
-      azureServiceConnection: 'azurerm'
+      azureServiceConnection: 'intech'
       approvalEmail: 'prod-approver@example.com'
     jobs:
       - template: terraform-template.yml
@@ -73,5 +66,5 @@ stages:
           backendRG: $(backendRG)
           backendSA: $(backendSA)
           backendKey: $(backendKey)
-          azureServiceConnection: $(azureServiceConnection)
+          azureServiceConnection: 'intech'
           approvalEmail: $(approvalEmail)
