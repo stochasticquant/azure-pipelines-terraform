@@ -7,8 +7,6 @@ pool:
   name: 'Default'
 
 variables:
-  backendRG: 'skink-rg'
-  backendSA: 'skinktfstate'
   backendKey: 'terraform.tfstate'
   azureServiceConnection: 'intech'
   approvalEmail: 'intx.contact@gmail.com'
@@ -21,8 +19,8 @@ stages:
       - template: terraform-template.yml
         parameters:
           environmentName: 'dev'
-          backendRG: $(backendRG)
-          backendSA: $(backendSA)
+          backendRG: 'dev-dove-rg'
+          backendSA: 'devdovetfstate'
           backendKey: $(backendKey)
           azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)
@@ -35,8 +33,8 @@ stages:
       - template: terraform-template.yml
         parameters:
           environmentName: 'test'
-          backendRG: $(backendRG)
-          backendSA: $(backendSA)
+          backendRG: 'test-goose-rg'
+          backendSA: 'testgoosetfstate'
           backendKey: $(backendKey)
           azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)
@@ -49,8 +47,8 @@ stages:
       - template: terraform-template.yml
         parameters:
           environmentName: 'prod'
-          backendRG: $(backendRG)
-          backendSA: $(backendSA)
+          backendRG: 'prod-wildcat-rg'
+          backendSA: 'prodwildcattfstate'
           backendKey: $(backendKey)
           azureServiceConnection: $(azureServiceConnection)
           approvalEmail: $(approvalEmail)

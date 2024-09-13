@@ -73,7 +73,7 @@ jobs:
 
   - deployment: TerraformApply
     displayName: 'Apply: ${{ parameters.environmentName }}'
-    environment: ${{ parameters.environmentName }}  # This sets the target environment for deployment
+    environment: ${{ parameters.environmentName }}
     dependsOn: waitForValidation
     strategy:
       runOnce:
