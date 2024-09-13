@@ -18,7 +18,13 @@ stages:
       azureServiceConnection: 'intech'
       approvalEmail: 'lukebyrnee97@gmail.com'
     jobs:
-      - script: echo $(azureServiceConnection)
+      - job: DebugVariables
+        steps:
+          - script: echo "Azure Service Connection: $(azureServiceConnection)"
+          - script: echo "Backend Resource Group: $(backendRG)"
+          - script: echo "Backend Storage Account: $(backendSA)"
+          - script: echo "Backend Key: $(backendKey)"
+      
       - template: terraform-template.yml
         parameters:
           environmentName: $(environmentName)
