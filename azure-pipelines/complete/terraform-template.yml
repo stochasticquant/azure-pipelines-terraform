@@ -40,7 +40,7 @@ jobs:
       - task: PublishPipelineArtifact@1
         inputs:
           targetPath: 'terraform'
-          artifactName: 'terraform-state'
+          artifactName: 'terraform-state-${{ parameters.environmentName }}'
 
   - job: TerraformPlan
     displayName: 'Plan: ${{ parameters.environmentName }}'
@@ -48,7 +48,7 @@ jobs:
     steps:
       - task: DownloadPipelineArtifact@2
         inputs:
-          artifactName: 'terraform-state'
+          artifactName: 'terraform-state-${{ parameters.environmentName }}'
           downloadPath: 'terraform'
 
       - task: TerraformTaskV4@4
@@ -81,7 +81,7 @@ jobs:
           steps:
             - task: DownloadPipelineArtifact@2
               inputs:
-                artifactName: 'terraform-state'
+                artifactName: 'terraform-state-${{ parameters.environmentName }}'
                 downloadPath: 'terraform'
 
             - task: TerraformTaskV4@4
