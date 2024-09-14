@@ -8,7 +8,7 @@ pool:
 
 variables:
   backendKey: 'terraform.tfstate'
-  azureServiceConnection: 'intech'
+  azureServiceConnection: 'azurerm'
   approvalEmail: 'intx.contact@gmail.com'
 
 stages:
