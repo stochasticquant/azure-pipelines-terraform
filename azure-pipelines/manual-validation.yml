@@ -84,6 +84,7 @@ stages:
               instructions: 'Please validate the build configuration and resume'
               onTimeout: 'reject'
       - job: TerraformApply
+        dependsOn: waitForValidation  # Apply will only run after waitForValidation
         steps:
           # Download the Terraform state artifact
           - task: DownloadPipelineArtifact@2
